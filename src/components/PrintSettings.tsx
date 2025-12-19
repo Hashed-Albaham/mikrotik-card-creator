@@ -1,4 +1,5 @@
 import { Printer, Image, Columns, Rows2, Move, User, Lock, Hash, Calendar, Palette, Bold } from 'lucide-react';
+import { NumberInput } from '@/components/ui/number-input';
 
 interface PrintSettingsProps {
   settings: {
@@ -69,11 +70,10 @@ const PrintSettings = ({ settings, onChange, onImageChange }: PrintSettingsProps
             <Columns className="w-4 h-4" />
             الأعمدة
           </label>
-          <input
-            type="number"
+          <NumberInput
             min={1}
             value={settings.columns}
-            onChange={(e) => onChange('columns', parseInt(e.target.value) || 1)}
+            onChange={(val) => onChange('columns', val)}
             className="input-field"
           />
         </div>
@@ -83,11 +83,10 @@ const PrintSettings = ({ settings, onChange, onImageChange }: PrintSettingsProps
             <Rows2 className="w-4 h-4" />
             الصفوف
           </label>
-          <input
-            type="number"
+          <NumberInput
             min={1}
             value={settings.rows}
-            onChange={(e) => onChange('rows', parseInt(e.target.value) || 1)}
+            onChange={(val) => onChange('rows', val)}
             className="input-field"
           />
         </div>
@@ -97,12 +96,12 @@ const PrintSettings = ({ settings, onChange, onImageChange }: PrintSettingsProps
             <Move className="w-4 h-4" />
             المسافة بين الكروت (mm)
           </label>
-          <input
-            type="number"
+          <NumberInput
             min={0}
             step={0.1}
+            allowFloat
             value={settings.boxSpacing}
-            onChange={(e) => onChange('boxSpacing', parseFloat(e.target.value) || 0)}
+            onChange={(val) => onChange('boxSpacing', val)}
             className="input-field"
           />
         </div>
@@ -165,12 +164,12 @@ const PrintSettings = ({ settings, onChange, onImageChange }: PrintSettingsProps
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             <div className="space-y-2">
               <label className="text-xs text-muted-foreground">حجم النص (pt)</label>
-              <input
-                type="number"
+              <NumberInput
                 min={1}
                 step={0.1}
+                allowFloat
                 value={settings.usernameSize}
-                onChange={(e) => onChange('usernameSize', parseFloat(e.target.value) || 8)}
+                onChange={(val) => onChange('usernameSize', val)}
                 className="input-field"
               />
             </div>
@@ -198,21 +197,21 @@ const PrintSettings = ({ settings, onChange, onImageChange }: PrintSettingsProps
             </label>
             <div className="space-y-2">
               <label className="text-xs text-muted-foreground">أفقياً (mm)</label>
-              <input
-                type="number"
+              <NumberInput
                 step={0.1}
+                allowFloat
                 value={settings.usernamePositionX}
-                onChange={(e) => onChange('usernamePositionX', parseFloat(e.target.value) || 0)}
+                onChange={(val) => onChange('usernamePositionX', val)}
                 className="input-field"
               />
             </div>
             <div className="space-y-2">
               <label className="text-xs text-muted-foreground">عمودياً (mm)</label>
-              <input
-                type="number"
+              <NumberInput
                 step={0.1}
+                allowFloat
                 value={settings.usernamePositionY}
-                onChange={(e) => onChange('usernamePositionY', parseFloat(e.target.value) || 0)}
+                onChange={(val) => onChange('usernamePositionY', val)}
                 className="input-field"
               />
             </div>
@@ -230,12 +229,12 @@ const PrintSettings = ({ settings, onChange, onImageChange }: PrintSettingsProps
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             <div className="space-y-2">
               <label className="text-xs text-muted-foreground">حجم النص (pt)</label>
-              <input
-                type="number"
+              <NumberInput
                 min={1}
                 step={0.1}
+                allowFloat
                 value={settings.passwordSize}
-                onChange={(e) => onChange('passwordSize', parseFloat(e.target.value) || 8)}
+                onChange={(val) => onChange('passwordSize', val)}
                 className="input-field"
               />
             </div>
@@ -263,21 +262,21 @@ const PrintSettings = ({ settings, onChange, onImageChange }: PrintSettingsProps
             </label>
             <div className="space-y-2">
               <label className="text-xs text-muted-foreground">أفقياً (mm)</label>
-              <input
-                type="number"
+              <NumberInput
                 step={0.1}
+                allowFloat
                 value={settings.passwordPositionX}
-                onChange={(e) => onChange('passwordPositionX', parseFloat(e.target.value) || 0)}
+                onChange={(val) => onChange('passwordPositionX', val)}
                 className="input-field"
               />
             </div>
             <div className="space-y-2">
               <label className="text-xs text-muted-foreground">عمودياً (mm)</label>
-              <input
-                type="number"
+              <NumberInput
                 step={0.1}
+                allowFloat
                 value={settings.passwordPositionY}
-                onChange={(e) => onChange('passwordPositionY', parseFloat(e.target.value) || 0)}
+                onChange={(val) => onChange('passwordPositionY', val)}
                 className="input-field"
               />
             </div>
@@ -295,22 +294,21 @@ const PrintSettings = ({ settings, onChange, onImageChange }: PrintSettingsProps
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             <div className="space-y-2">
               <label className="text-xs text-muted-foreground">يبدأ من</label>
-              <input
-                type="number"
+              <NumberInput
                 min={1}
                 value={settings.serialStartNumber}
-                onChange={(e) => onChange('serialStartNumber', parseInt(e.target.value) || 1)}
+                onChange={(val) => onChange('serialStartNumber', val)}
                 className="input-field"
               />
             </div>
             <div className="space-y-2">
               <label className="text-xs text-muted-foreground">حجم النص (pt)</label>
-              <input
-                type="number"
+              <NumberInput
                 min={1}
                 step={0.1}
+                allowFloat
                 value={settings.serialNumberSize}
-                onChange={(e) => onChange('serialNumberSize', parseFloat(e.target.value) || 6)}
+                onChange={(val) => onChange('serialNumberSize', val)}
                 className="input-field"
               />
             </div>
@@ -338,21 +336,21 @@ const PrintSettings = ({ settings, onChange, onImageChange }: PrintSettingsProps
             </label>
             <div className="space-y-2">
               <label className="text-xs text-muted-foreground">أفقياً (mm)</label>
-              <input
-                type="number"
+              <NumberInput
                 step={0.1}
+                allowFloat
                 value={settings.serialPositionX}
-                onChange={(e) => onChange('serialPositionX', parseFloat(e.target.value) || 0)}
+                onChange={(val) => onChange('serialPositionX', val)}
                 className="input-field"
               />
             </div>
             <div className="space-y-2">
               <label className="text-xs text-muted-foreground">عمودياً (mm)</label>
-              <input
-                type="number"
+              <NumberInput
                 step={0.1}
+                allowFloat
                 value={settings.serialPositionY}
-                onChange={(e) => onChange('serialPositionY', parseFloat(e.target.value) || 0)}
+                onChange={(val) => onChange('serialPositionY', val)}
                 className="input-field"
               />
             </div>
@@ -370,12 +368,12 @@ const PrintSettings = ({ settings, onChange, onImageChange }: PrintSettingsProps
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             <div className="space-y-2">
               <label className="text-xs text-muted-foreground">حجم النص (pt)</label>
-              <input
-                type="number"
+              <NumberInput
                 min={1}
                 step={0.1}
+                allowFloat
                 value={settings.dateSize}
-                onChange={(e) => onChange('dateSize', parseFloat(e.target.value) || 8)}
+                onChange={(val) => onChange('dateSize', val)}
                 className="input-field"
               />
             </div>
@@ -403,21 +401,21 @@ const PrintSettings = ({ settings, onChange, onImageChange }: PrintSettingsProps
             </label>
             <div className="space-y-2">
               <label className="text-xs text-muted-foreground">أفقياً (mm)</label>
-              <input
-                type="number"
+              <NumberInput
                 step={0.1}
+                allowFloat
                 value={settings.datePositionX}
-                onChange={(e) => onChange('datePositionX', parseFloat(e.target.value) || 0)}
+                onChange={(val) => onChange('datePositionX', val)}
                 className="input-field"
               />
             </div>
             <div className="space-y-2">
               <label className="text-xs text-muted-foreground">عمودياً (mm)</label>
-              <input
-                type="number"
+              <NumberInput
                 step={0.1}
+                allowFloat
                 value={settings.datePositionY}
-                onChange={(e) => onChange('datePositionY', parseFloat(e.target.value) || 0)}
+                onChange={(val) => onChange('datePositionY', val)}
                 className="input-field"
               />
             </div>

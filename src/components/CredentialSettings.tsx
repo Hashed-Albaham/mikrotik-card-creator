@@ -1,4 +1,5 @@
 import { Key, Hash, Link, Type, ListOrdered, Timer } from 'lucide-react';
+import { NumberInput } from '@/components/ui/number-input';
 
 interface CredentialSettingsProps {
   settings: {
@@ -65,11 +66,10 @@ const CredentialSettings = ({ settings, onChange }: CredentialSettingsProps) => 
             <Hash className="w-4 h-4" />
             طول الكود
           </label>
-          <input
-            type="number"
-            min={5}
+          <NumberInput
+            min={1}
             value={settings.codeLength}
-            onChange={(e) => onChange('codeLength', parseInt(e.target.value) || 5)}
+            onChange={(val) => onChange('codeLength', val)}
             className="input-field"
           />
         </div>
@@ -80,11 +80,10 @@ const CredentialSettings = ({ settings, onChange }: CredentialSettingsProps) => 
             <ListOrdered className="w-4 h-4" />
             عدد الحسابات
           </label>
-          <input
-            type="number"
+          <NumberInput
             min={1}
             value={settings.accountCount}
-            onChange={(e) => onChange('accountCount', parseInt(e.target.value) || 1)}
+            onChange={(val) => onChange('accountCount', val)}
             className="input-field"
           />
         </div>
@@ -142,11 +141,10 @@ const CredentialSettings = ({ settings, onChange }: CredentialSettingsProps) => 
             <Timer className="w-4 h-4" />
             تأخير السكريبت (ms)
           </label>
-          <input
-            type="number"
+          <NumberInput
             min={0}
             value={settings.scriptDelay}
-            onChange={(e) => onChange('scriptDelay', parseInt(e.target.value) || 0)}
+            onChange={(val) => onChange('scriptDelay', val)}
             className="input-field"
           />
         </div>
