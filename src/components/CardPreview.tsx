@@ -105,7 +105,7 @@ const CardPreview = ({ credentials, printSettings }: CardPreviewProps) => {
               backgroundImage: printSettings.backgroundImage 
                 ? `url(${printSettings.backgroundImage})` 
                 : 'linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--muted)) 100%)',
-              backgroundSize: 'cover',
+              backgroundSize: '100% 100%',
               backgroundPosition: 'center',
             }}
           >
