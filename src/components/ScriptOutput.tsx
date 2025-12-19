@@ -57,42 +57,38 @@ const ScriptOutput = ({ script, credentials }: ScriptOutputProps) => {
           <Code className="w-5 h-5 text-primary" />
           السكريبت الناتج
         </h2>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={copyToClipboard}
-            disabled={!script}
-            className="btn-secondary flex items-center gap-2 text-sm py-2 px-4 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-            نسخ
-          </button>
-          <br>
-          <button
-            onClick={downloadScript}
-            disabled={!script}
-            className="btn-secondary flex items-center gap-2 text-sm py-2 px-4 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <Download className="w-4 h-4" />
-            تحميل .rsc
-          </button>
-          <button
-            onClick={downloadTxt}
-            disabled={credentials.length === 0}
-            className="btn-secondary flex items-center gap-2 text-sm py-2 px-4 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <FileText className="w-4 h-4" />
-            تحميل .txt
-          </button>
-        </div>
-      </div>
 
-      <textarea
-        readOnly
-        value={script}
-        placeholder="سيظهر هنا سكريبت MikroTik بعد التوليد..."
-        className="script-output"
-      />
-    </div>
+
+
+
+<div className="flex flex-wrap gap-2 sm:flex-nowrap">
+  <button
+    onClick={copyToClipboard}
+    disabled={!script}
+    className="btn-secondary flex items-center gap-2 text-sm py-2 px-4 w-full sm:w-1/2 md:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
+  >
+    {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+    نسخ
+  </button>
+
+  <button
+    onClick={downloadScript}
+    disabled={!script}
+    className="btn-secondary flex items-center gap-2 text-sm py-2 px-4 w-full sm:w-1/2 md:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
+  >
+    <Download className="w-4 h-4" />
+    تحميل .rsc
+  </button>
+
+  <button
+    onClick={downloadTxt}
+    disabled={credentials.length === 0}
+    className="btn-secondary flex items-center gap-2 text-sm py-2 px-4 w-full sm:w-1/2 md:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
+  >
+    <FileText className="w-4 h-4" />
+    تحميل .txt
+  </button>
+</div>
   );
 };
 
