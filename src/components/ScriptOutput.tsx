@@ -66,6 +66,7 @@ const ScriptOutput = ({ script, credentials }: ScriptOutputProps) => {
             {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
             نسخ
           </button>
+          <br>
           <button
             onClick={downloadScript}
             disabled={!script}
