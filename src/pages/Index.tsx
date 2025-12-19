@@ -25,6 +25,7 @@ const Index = () => {
     hotspotServer: 'all',
     profile: 'default',
     hotspotLimit: '',
+    hotspotDataLimit: '',
     comment: '',
     location: '',
   });

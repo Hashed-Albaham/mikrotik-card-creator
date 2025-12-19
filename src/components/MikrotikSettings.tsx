@@ -1,4 +1,4 @@
-import { Network, Users, Server, Tag, Clock, MessageSquare, MapPin } from 'lucide-react';
+import { Network, Users, Server, Tag, Clock, MessageSquare, MapPin, Database } from 'lucide-react';
 
 interface MikrotikSettingsProps {
   settings: {
@@ -8,6 +8,7 @@ interface MikrotikSettingsProps {
     hotspotServer: string;
     profile: string;
     hotspotLimit: string;
+    hotspotDataLimit: string;
     comment: string;
     location: string;
   };
@@ -122,6 +123,26 @@ const MikrotikSettings = ({ settings, onChange }: MikrotikSettingsProps) => {
               placeholder="مثال: 1d أو 12h30m"
               className="input-field"
             />
+          </div>
+        )}
+
+        {/* Data Limit - Only for Hotspot */}
+        {isHotspot && (
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+              <Database className="w-4 h-4" />
+              حد البيانات (بايت)
+            </label>
+            <input
+              type="text"
+              value={settings.hotspotDataLimit}
+              onChange={(e) => onChange('hotspotDataLimit', e.target.value)}
+              placeholder="مثال: 1073741824 (1GB)"
+              className="input-field"
+            />
+            <p className="text-xs text-muted-foreground/70">
+              1MB = 1048576 | 1GB = 1073741824 | 10GB = 10737418240
+            </p>
           </div>
         )}
 
