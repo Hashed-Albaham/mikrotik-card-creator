@@ -1,4 +1,4 @@
-import { Eye, User, Lock, Hash, Calendar } from 'lucide-react';
+import { Eye } from 'lucide-react';
 
 interface Credential {
   username: string;
@@ -11,6 +11,9 @@ interface Credential {
 interface CardPreviewProps {
   credentials: Credential[];
   printSettings: {
+    columns: number;
+    rows: number;
+    boxSpacing: number;
     backgroundImage: string | null;
     printUsername: boolean;
     printPassword: boolean;
@@ -44,6 +47,27 @@ const CardPreview = ({ credentials, printSettings }: CardPreviewProps) => {
   const credential = credentials[0];
   const today = new Date().toLocaleDateString('ar-EG');
 
+  // A4 dimensions in mm (same as PDF)
+  const pageWidth = 210;
+  const pageHeight = 297;
+  
+  // Calculate card dimensions exactly like PDF
+  const cardWidthMM = (pageWidth - printSettings.boxSpacing * (printSettings.columns + 1)) / printSettings.columns;
+  const cardHeightMM = (pageHeight - printSettings.boxSpacing * (printSettings.rows + 1)) / printSettings.rows;
+  
+  // Scale factor: 1mm = 3.78px (approximately)
+  const SCALE = 3.78;
+  
+  // Preview dimensions in pixels
+  const previewWidth = cardWidthMM * SCALE;
+  const previewHeight = cardHeightMM * SCALE;
+
+  // Convert mm to preview pixels
+  const mmToPixels = (mm: number) => mm * SCALE;
+
+  // Convert pt to preview pixels (1pt ≈ 0.353mm)
+  const ptToPixels = (pt: number) => pt * 0.353 * SCALE;
+
   return (
     <div className="glass-card p-6 fade-in">
       <h2 className="section-title">
@@ -51,20 +75,33 @@ const CardPreview = ({ credentials, printSettings }: CardPreviewProps) => {
         معاينة الكرت
       </h2>
 
-      <div className="mt-6 flex justify-center">
+      {/* Card Dimensions Info */}
+      <div className="mt-4 mb-4 text-sm text-muted-foreground text-center">
+        أبعاد الكرت: {cardWidthMM.toFixed(1)} × {cardHeightMM.toFixed(1)} مم
+      </div>
+
+      <div className="mt-6 flex justify-center overflow-auto">
         {!credential ? (
-          <div className="card-preview w-full max-w-md">
-            <div className="text-center text-muted-foreground">
+          <div 
+            className="border-2 border-dashed border-primary/30 rounded-lg flex items-center justify-center"
+            style={{
+              width: `${previewWidth}px`,
+              height: `${previewHeight}px`,
+              minWidth: '200px',
+              minHeight: '80px',
+            }}
+          >
+            <div className="text-center text-muted-foreground p-4">
               <Eye className="w-12 h-12 mx-auto mb-4 opacity-50" />
               <p>تظهر المعاينة هنا بعد التوليد</p>
             </div>
           </div>
         ) : (
           <div
-            className="relative border-2 border-dashed border-primary/30 rounded-lg overflow-hidden"
+            className="relative border border-border/50 rounded overflow-hidden shadow-lg"
             style={{
-              width: '200px',
-              height: '80px',
+              width: `${previewWidth}px`,
+              height: `${previewHeight}px`,
               backgroundImage: printSettings.backgroundImage 
                 ? `url(${printSettings.backgroundImage})` 
                 : 'linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--muted)) 100%)',
@@ -72,83 +109,75 @@ const CardPreview = ({ credentials, printSettings }: CardPreviewProps) => {
               backgroundPosition: 'center',
             }}
           >
-            {/* Username */}
+            {/* Username - positioned exactly like PDF */}
             {printSettings.printUsername && (
               <div
                 className="absolute whitespace-nowrap"
                 style={{
-                  left: `${printSettings.usernamePositionX * 2}px`,
-                  top: `${printSettings.usernamePositionY * 2}px`,
-                  fontSize: `${printSettings.usernameSize * 1.2}px`,
+                  left: `${mmToPixels(printSettings.usernamePositionX)}px`,
+                  top: `${mmToPixels(printSettings.usernamePositionY)}px`,
+                  fontSize: `${ptToPixels(printSettings.usernameSize)}px`,
                   color: printSettings.usernameColor,
                   fontWeight: printSettings.usernameBold ? 'bold' : 'normal',
-                  direction: 'ltr',
+                  fontFamily: 'Helvetica, Arial, sans-serif',
+                  lineHeight: 1,
                 }}
               >
-                <span className="flex items-center gap-1">
-                  <User className="w-3 h-3" />
-                  {credential.username}
-                </span>
+                {credential.username}
               </div>
             )}
 
-            {/* Password */}
+            {/* Password - positioned exactly like PDF */}
             {printSettings.printPassword && (
               <div
                 className="absolute whitespace-nowrap"
                 style={{
-                  left: `${printSettings.passwordPositionX * 2}px`,
-                  top: `${printSettings.passwordPositionY * 2}px`,
-                  fontSize: `${printSettings.passwordSize * 1.2}px`,
+                  left: `${mmToPixels(printSettings.passwordPositionX)}px`,
+                  top: `${mmToPixels(printSettings.passwordPositionY)}px`,
+                  fontSize: `${ptToPixels(printSettings.passwordSize)}px`,
                   color: printSettings.passwordColor,
                   fontWeight: printSettings.passwordBold ? 'bold' : 'normal',
-                  direction: 'ltr',
+                  fontFamily: 'Helvetica, Arial, sans-serif',
+                  lineHeight: 1,
                 }}
               >
-                <span className="flex items-center gap-1">
-                  <Lock className="w-3 h-3" />
-                  {credential.password || '(بدون)'}
-                </span>
+                {credential.password || '(no password)'}
               </div>
             )}
 
-            {/* Serial Number */}
+            {/* Serial Number - positioned exactly like PDF */}
             {printSettings.useSerialNumber && (
               <div
                 className="absolute whitespace-nowrap"
                 style={{
-                  left: `${printSettings.serialPositionX * 2}px`,
-                  top: `${printSettings.serialPositionY * 2}px`,
-                  fontSize: `${printSettings.serialNumberSize * 1.2}px`,
+                  left: `${mmToPixels(printSettings.serialPositionX)}px`,
+                  top: `${mmToPixels(printSettings.serialPositionY)}px`,
+                  fontSize: `${ptToPixels(printSettings.serialNumberSize)}px`,
                   color: printSettings.serialColor,
                   fontWeight: printSettings.serialBold ? 'bold' : 'normal',
-                  direction: 'ltr',
+                  fontFamily: 'Helvetica, Arial, sans-serif',
+                  lineHeight: 1,
                 }}
               >
-                <span className="flex items-center gap-1">
-                  <Hash className="w-3 h-3" />
-                  {printSettings.serialStartNumber}
-                </span>
+                {printSettings.serialStartNumber}
               </div>
             )}
 
-            {/* Date */}
+            {/* Date - positioned exactly like PDF */}
             {printSettings.useDatePrinting && (
               <div
                 className="absolute whitespace-nowrap"
                 style={{
-                  left: `${printSettings.datePositionX * 2}px`,
-                  top: `${printSettings.datePositionY * 2}px`,
-                  fontSize: `${printSettings.dateSize * 1.2}px`,
+                  left: `${mmToPixels(printSettings.datePositionX)}px`,
+                  top: `${mmToPixels(printSettings.datePositionY)}px`,
+                  fontSize: `${ptToPixels(printSettings.dateSize)}px`,
                   color: printSettings.dateColor,
                   fontWeight: printSettings.dateBold ? 'bold' : 'normal',
-                  direction: 'ltr',
+                  fontFamily: 'Helvetica, Arial, sans-serif',
+                  lineHeight: 1,
                 }}
               >
-                <span className="flex items-center gap-1">
-                  <Calendar className="w-3 h-3" />
-                  {today}
-                </span>
+                {today}
               </div>
             )}
           </div>
