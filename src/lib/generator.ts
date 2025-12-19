@@ -5,6 +5,7 @@ export interface MikrotikSettings {
   hotspotServer: string;
   profile: string;
   hotspotLimit: string;
+  hotspotDataLimit: string;
   comment: string;
   location: string;
 }
@@ -119,6 +120,10 @@ export function generateCredentials(
       
       if (mikrotik.hotspotLimit.trim()) {
         script += ` limit-uptime="${mikrotik.hotspotLimit.trim()}"`;
+      }
+      
+      if (mikrotik.hotspotDataLimit.trim()) {
+        script += ` limit-bytes-total="${mikrotik.hotspotDataLimit.trim()}"`;
       }
       
       if (finalComment) {
