@@ -89,6 +89,15 @@ const ScriptOutput = ({ script, credentials }: ScriptOutputProps) => {
     تحميل .txt
   </button>
 </div>
+         </div>
+
+      <textarea
+        readOnly
+        value={script}
+        placeholder="سيظهر هنا سكريبت MikroTik بعد التوليد..."
+        className="script-output"
+      />
+    </div>
   );
 };
 
