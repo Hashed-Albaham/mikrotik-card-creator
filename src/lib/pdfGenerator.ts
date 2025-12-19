@@ -1,4 +1,3 @@
-import jsPDF from 'jspdf';
 import { GeneratedCredential } from './generator';
 
 export interface PrintSettings {
@@ -48,7 +47,9 @@ export async function generatePDF(
   credentials: GeneratedCredential[],
   settings: PrintSettings
 ): Promise<void> {
-  const { jsPDF } = await import('jspdf');
+  // Dynamic import to avoid SSR issues
+  const jsPDFModule = await import('jspdf');
+  const jsPDF = jsPDFModule.default;
   
   // A4 dimensions in mm
   const pageWidth = 210;
