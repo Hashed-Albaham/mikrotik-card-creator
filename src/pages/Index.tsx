@@ -8,6 +8,7 @@ import PrintSettings from '@/components/PrintSettings';
 import CardPreview from '@/components/CardPreview';
 import ScriptOutput from '@/components/ScriptOutput';
 import SettingsManager from '@/components/SettingsManager';
+import MikrotikConnection from '@/components/MikrotikConnection';
 import { generateCredentials, GeneratedCredential, MikrotikSettings as MikrotikSettingsType, CredentialSettings as CredentialSettingsType } from '@/lib/generator';
 import { generatePDF, PrintSettings as PrintSettingsType } from '@/lib/pdfGenerator';
 
@@ -16,6 +17,11 @@ const Index = () => {
   const [isPdfGenerating, setIsPdfGenerating] = useState(false);
   const [credentials, setCredentials] = useState<GeneratedCredential[]>([]);
   const [script, setScript] = useState('');
+  const [existingUsers, setExistingUsers] = useState<string[]>([]);
+
+  const handleExistingUsersLoaded = (users: string[]) => {
+    setExistingUsers(users);
+  };
 
   // Mikrotik Settings
   const [mikrotikSettings, setMikrotikSettings] = useState<MikrotikSettingsType>({
@@ -116,7 +122,8 @@ const Index = () => {
           mikrotikSettings,
           credentialSettings,
           printSettings.useSerialNumber,
-          printSettings.serialStartNumber
+          printSettings.serialStartNumber,
+          existingUsers
         );
         
         setCredentials(result.credentials);
@@ -187,6 +194,12 @@ const Index = () => {
             أنشئ حسابات User Manager و Hotspot لإصدار RouterOS v6 و v7 بسهولة واحترافية
           </p>
         </div>
+
+        {/* MikroTik Connection */}
+        <MikrotikConnection 
+          script={script} 
+          onExistingUsersLoaded={handleExistingUsersLoaded} 
+        />
 
         {/* Main Settings */}
         <div id="generator" className="space-y-6">

@@ -48,11 +48,12 @@ export function generateCredentials(
   mikrotik: MikrotikSettings,
   credential: CredentialSettings,
   useSerialNumber: boolean,
-  serialStartNumber: number
+  serialStartNumber: number,
+  existingUsers: string[] = []
 ): { credentials: GeneratedCredential[]; script: string } {
   const credentials: GeneratedCredential[] = [];
   let script = '';
-  const usedUsernames = new Set<string>();
+  const usedUsernames = new Set<string>(existingUsers);
 
   for (let i = 0; i < credential.accountCount; i++) {
     // Generate unique username
